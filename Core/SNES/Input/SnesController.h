@@ -17,7 +17,7 @@ protected:
 	void RefreshStateBuffer() override;
 
 public:
-	enum Buttons { A = 0, B, X, Y, L, R, Select, Start, Up, Down, Left, Right };
+	enum Buttons { A = 0, B, X, Y, L, R, Select, Start, Up, Down, Left, Right, TA, TB, TX, TY, TL, TR};
 
 	SnesController(Emulator* emu, uint8_t port, KeyMappingSet keyMappings);
 
