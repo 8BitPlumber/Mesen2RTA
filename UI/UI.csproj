@@ -94,6 +94,7 @@
 		<RestoreSources>
 			https://nuget-feed-nightly.avaloniaui.net/v3/index.json;https://api.nuget.org/v3/index.json
 		</RestoreSources>
+		<PublishAot>True</PublishAot>
 	</PropertyGroup>
 	<ItemGroup>
 		<TrimmerRootAssembly Include="Mesen" />
