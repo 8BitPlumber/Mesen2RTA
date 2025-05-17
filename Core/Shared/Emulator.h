@@ -118,6 +118,8 @@ private:
 	int32_t _stopCode = 0;
 	bool _stopRequested = false;
 	bool isMemUnclean = false;
+	uint32_t sessionID = 255;
+	bool isSessionClean = true;
 
 	void WaitForLock();
 	void WaitForPauseEnd();
@@ -251,6 +253,10 @@ public:
 	void ShowResetStatus(string type);
 	bool GetIsUnclean();
 	void SetIsUnclean(bool state);
+	uint32_t GetSessionID();
+	bool GetIsSessionClean();
+	void SetIsSessionClean(bool state);
+	void NewSessionID();
 	
 	template<CpuType type> __forceinline void ProcessInstruction()
 	{

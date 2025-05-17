@@ -253,6 +253,8 @@ bool SaveStateManager::LoadState(int stateIndex)
 {
 	string filepath = SaveStateManager::GetStateFilepath(stateIndex);
 	if(LoadState(filepath, false)) {
+		_emu->NewSessionID();
+		_emu->SetIsSessionClean(false);
 		MessageManager::DisplayMessage("SaveStates", "SaveStateLoaded", std::to_string(stateIndex));
 		return true;
 	}

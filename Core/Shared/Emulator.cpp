@@ -1184,6 +1184,7 @@ void Emulator::ShowResetStatus(string type)
 	string version = GetSettings()->GetVersionString() + " ";
 	string indicateModified = isMemUnclean ? "Modified " : " ";
 	MessageManager::DisplayMessage(version + modelName + " " + type, indicateModified + romHash);
+	NewSessionID();
 }
 
 void Emulator::SetIsUnclean(bool state)
@@ -1194,6 +1195,27 @@ void Emulator::SetIsUnclean(bool state)
 bool Emulator::GetIsUnclean()
 {
 	return isMemUnclean;
+}
+
+void Emulator::NewSessionID()
+{
+	sessionID = rand();
+	isSessionClean = true;
+}
+
+uint32_t Emulator::GetSessionID()
+{
+	return sessionID;
+}
+
+bool Emulator::GetIsSessionClean()
+{
+	return isSessionClean;
+}
+
+void Emulator::SetIsSessionClean(bool state)
+{
+	isSessionClean = state;
 }
 
 template void Emulator::AddDebugEvent<CpuType::Snes>(DebugEventType evtType);
