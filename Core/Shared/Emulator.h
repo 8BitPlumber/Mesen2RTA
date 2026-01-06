@@ -10,6 +10,7 @@
 #include "Utilities/safe_ptr.h"
 #include "Utilities/SimpleLock.h"
 #include "Utilities/VirtualFile.h"
+#include "RunTimer.h"
 
 class Debugger;
 class DebugHud;
@@ -120,6 +121,7 @@ private:
 	bool isMemUnclean = false;
 	uint32_t sessionID = 255;
 	bool isSessionClean = true;
+	RunTimer runTimer;
 
 	void WaitForLock();
 	void WaitForPauseEnd();
@@ -127,7 +129,7 @@ private:
 	void ProcessAutoSaveState();
 	bool ProcessSystemActions();
 	void RunFrameWithRunAhead();
-
+	
 	void BlockDebuggerRequests();
 	void ResetDebugger(bool startDebugger = false);
 
@@ -177,7 +179,7 @@ public:
 	vector<CpuType> GetCpuTypes();
 	uint64_t GetMasterClock();
 	uint32_t GetMasterClockRate();
-
+	
 	EmulatorLock AcquireLock(bool allowDebuggerLock = true);
 	void Lock();
 	void Unlock();
@@ -257,6 +259,7 @@ public:
 	bool GetIsSessionClean();
 	void SetIsSessionClean(bool state);
 	void NewSessionID();
+	RunTimer* GetRunTimer();
 	
 	template<CpuType type> __forceinline void ProcessInstruction()
 	{

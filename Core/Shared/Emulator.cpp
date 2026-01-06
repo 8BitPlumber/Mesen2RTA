@@ -64,7 +64,8 @@ Emulator::Emulator() :
 	_historyViewer(new HistoryViewer(this)),
 	_gameServer(new GameServer(this)),
 	_gameClient(new GameClient(this)),
-	_rewindManager(new RewindManager(this))
+	_rewindManager(new RewindManager(this)),
+	runTimer(nullptr, 0)
 {
 	_paused = false;
 	_pauseOnNextFrame = false;
@@ -138,6 +139,9 @@ void Emulator::Run()
 			RunFrameWithRunAhead();
 		} else {
 			_console->RunFrame();
+			if(runTimer.IsValid()) {
+				runTimer.UpdateTimer();
+			}
 			_rewindManager->ProcessEndOfFrame();
 			_historyViewer->ProcessEndOfFrame();
 			ProcessSystemActions();
@@ -328,6 +332,7 @@ void Emulator::Reset()
 	}
 	ShowResetStatus("Reset");
 	_console->Reset();
+	runTimer.Reset();
 
 	//Ensure reset button flag is off before recording input for first frame
 	_systemActionManager->ResetState();
@@ -366,6 +371,7 @@ void Emulator::PowerCycle()
 {
 	ShowResetStatus("Power");
 	ReloadRom(true);
+	runTimer.Reset();
 }
 
 bool Emulator::LoadRom(VirtualFile romFile, VirtualFile patchFile, bool stopRom, bool forPowerCycle)
@@ -533,6 +539,8 @@ bool Emulator::InternalLoadRom(VirtualFile romFile, VirtualFile patchFile, bool 
 	if(!forPowerCycle && !_audioPlayerHud) {
 		ShowResetStatus("Loaded");
 		isMemUnclean = false;
+		runTimer.DoSetup(_consoleMemory[(int)GetCpuTypes()[0]].Memory, _consoleMemory[(int)GetCpuTypes()[0]].Size);
+		
 	}
 
 	_videoDecoder->StartThread();
@@ -1216,6 +1224,11 @@ bool Emulator::GetIsSessionClean()
 void Emulator::SetIsSessionClean(bool state)
 {
 	isSessionClean = state;
+}
+
+RunTimer* Emulator::GetRunTimer()
+{
+	return &runTimer;
 }
 
 template void Emulator::AddDebugEvent<CpuType::Snes>(DebugEventType evtType);

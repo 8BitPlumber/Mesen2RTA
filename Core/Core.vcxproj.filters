@@ -2976,6 +2976,9 @@
     <ClInclude Include="NES\Mappers\Unlicensed\Mapper487.h">
       <Filter>NES\Mappers\Unlicensed</Filter>
     </ClInclude>
+    <ClInclude Include="RunTimer.h">
+      <Filter>Shared</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Shared\Video\RotateFilter.cpp">
@@ -3337,6 +3340,9 @@
     </ClCompile>
     <ClCompile Include="SNES\Debugger\St018DisUtils.cpp">
       <Filter>SNES\Debugger</Filter>
+    </ClCompile>
+    <ClCompile Include="RunTimer.cpp">
+      <Filter>Shared</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
